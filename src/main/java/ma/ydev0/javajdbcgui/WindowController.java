@@ -153,32 +153,36 @@ public class WindowController implements Initializable {
     @FXML
     public void updateCharacterAction() {
         Gcharacter gcharacter = getGcharacterFromField();
-        if(gcharacter != null) serviceGcharacter.update(gcharacter);
-        clearGcharacterField();
-        Gcharacter item = tvGcharacters.getSelectionModel().getSelectedItem();
-        item.setName(gcharacter.getName());
-        item.setHealth(gcharacter.getHealth());
-        item.setDamage(gcharacter.getDamage());
-        item.setGClass(gcharacter.getGClass());
-        tvGcharacters.refresh();
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Message");
-        alert.setHeaderText(null);
-        alert.setContentText("Data has been updated.");
-        alert.show();
+        if(gcharacter != null && !tfGcharacterId.getText().isEmpty()) {
+            serviceGcharacter.update(gcharacter);
+            clearGcharacterField();
+            Gcharacter item = tvGcharacters.getSelectionModel().getSelectedItem();
+            item.setName(gcharacter.getName());
+            item.setHealth(gcharacter.getHealth());
+            item.setDamage(gcharacter.getDamage());
+            item.setGClass(gcharacter.getGClass());
+            tvGcharacters.refresh();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Data has been updated.");
+            alert.show();
+        }
     }
 
     @FXML
     public void addCharacterAction() {
         Gcharacter gcharacter = getGcharacterFromField();
-        if(gcharacter != null) serviceGcharacter.save(gcharacter);
-        tvGcharacters.getItems().add(gcharacter);
-        clearGcharacterField();
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Message");
-        alert.setHeaderText(null);
-        alert.setContentText("Data has been added.");
-        alert.show();
+        if(gcharacter != null) {
+            serviceGcharacter.save(gcharacter);
+            tvGcharacters.getItems().add(gcharacter);
+            clearGcharacterField();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Data has been added.");
+            alert.show();
+        }
     }
 
     @FXML
@@ -200,30 +204,34 @@ public class WindowController implements Initializable {
     @FXML
     public void updateGclassAction() {
         Gclass gclass = getGclassFromField();
-        if(gclass != null) serviceGclass.update(gclass);
-        Gclass item = tvGclasses.getSelectionModel().getSelectedItem();
-        clearGclassField();
-        item.setLabel(gclass.getLabel());
-        item.setDescription(gclass.getDescription());
-        tvGclasses.refresh();
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Message");
-        alert.setHeaderText(null);
-        alert.setContentText("Data has been updated.");
-        alert.show();
+        if(gclass != null && !tfGclassId.getText().isEmpty()) {
+            serviceGclass.update(gclass);
+            Gclass item = tvGclasses.getSelectionModel().getSelectedItem();
+            clearGclassField();
+            item.setLabel(gclass.getLabel());
+            item.setDescription(gclass.getDescription());
+            tvGclasses.refresh();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Data has been updated.");
+            alert.show();
+        }
     }
 
     @FXML
     public void addGclassAction() {
         Gclass gclass = getGclassFromField();
-        if(gclass != null) serviceGclass.save(gclass);
-        tvGclasses.getItems().add(gclass);
-        clearGclassField();
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Message");
-        alert.setHeaderText(null);
-        alert.setContentText("Data has been added.");
-        alert.show();
+        if(gclass != null) {
+            serviceGclass.save(gclass);
+            tvGclasses.getItems().add(gclass);
+            clearGclassField();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Data has been added.");
+            alert.show();
+        }
     }
 
     private Gclass getGclassFromField() {
@@ -288,7 +296,8 @@ public class WindowController implements Initializable {
         try {
             Integer.parseInt(value);
         } catch (Exception e) {
-            tfhealth.setText(value.substring(0, value.length() - 1));
+            if(value.length() > 0)
+                tfhealth.setText(value.substring(0, value.length() - 1));
         }
     }
 
@@ -298,7 +307,8 @@ public class WindowController implements Initializable {
         try {
             Float.parseFloat(value);
         } catch (Exception e) {
-            tfdamage.setText(value.substring(0, value.length() - 1));
+            if(value.length() > 0)
+                tfdamage.setText(value.substring(0, value.length() - 1));
         }
     }
 
