@@ -4,10 +4,7 @@ import ma.ydev0.javajdbcgui.dao.GcharacterDao;
 import ma.ydev0.javajdbcgui.entities.Gcharacter;
 import ma.ydev0.javajdbcgui.entities.Gclass;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,11 +19,11 @@ public class GcharacterDaoImp implements GcharacterDao {
     PreparedStatement ps = null;
 
     try {
-      ps = conn.prepareStatement("INSERT INTO gcharacter (name, health, damage, id_class) VALUES (?, ?, ?, ?)");
+      ps = conn.prepareStatement("INSERT INTO gcharacter (name, health, damage, id_class) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
       ps.setString(1, gcharacter.getName());
       ps.setInt(2, gcharacter.getHealth());
       ps.setFloat(3, gcharacter.getDamage());
-      ps.setInt(4, gcharacter.getgClass().getId());
+      ps.setInt(4, gcharacter.getGClass().getId());
       int rowsAffected = ps.executeUpdate();
 
       if (rowsAffected > 0) {
@@ -34,17 +31,16 @@ public class GcharacterDaoImp implements GcharacterDao {
 
         if (rs.next()) {
           int id = rs.getInt(1);
-
           gcharacter.setId(id);
         }
 
         Dao.closeResultSet(rs);
       } else {
-        System.out.println("Aucune ligne renvoyé");;
+        System.out.println("Aucune ligne renvoyée");
       }
 
     } catch (SQLException e) {
-      System.err.println("problème de requête pour ajouter le personnage : " + gcharacter);
+      System.err.println("Problème de requête pour ajouter le personnage : " + gcharacter + "\nDétail : " + e.getMessage());
     } finally {
       Dao.closeStatement(ps);
     }
@@ -59,7 +55,7 @@ public class GcharacterDaoImp implements GcharacterDao {
       ps.setString(1, gcharacter.getName());
       ps.setInt(2, gcharacter.getHealth());
       ps.setFloat(3, gcharacter.getDamage());
-      ps.setInt(4, gcharacter.getgClass().getId());
+      ps.setInt(4, gcharacter.getGClass().getId());
       ps.setInt(5, gcharacter.getId());
       ps.executeUpdate();
     } catch (SQLException e) {
@@ -153,7 +149,7 @@ public class GcharacterDaoImp implements GcharacterDao {
     gcharacter.setName(rs.getString(2));
     gcharacter.setHealth(rs.getInt(3));
     gcharacter.setDamage(rs.getFloat(4));
-    gcharacter.setgClass(gclass);
+    gcharacter.setGClass(gclass);
 
     return gcharacter;
   }

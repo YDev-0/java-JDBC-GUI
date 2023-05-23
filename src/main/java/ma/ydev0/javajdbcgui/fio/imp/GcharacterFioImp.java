@@ -33,7 +33,7 @@ public class GcharacterFioImp implements GcharacterFio {
                 gcharacters.get(i).getName(),
                 gcharacters.get(i).getHealth(),
                 gcharacters.get(i).getDamage() ,
-                gcharacters.get(i).getgClass().getId()
+                gcharacters.get(i).getGClass().getId()
             });
         }
 

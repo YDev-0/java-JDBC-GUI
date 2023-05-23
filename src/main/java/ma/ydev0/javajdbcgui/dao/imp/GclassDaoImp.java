@@ -4,10 +4,7 @@ package ma.ydev0.javajdbcgui.dao.imp;
 import ma.ydev0.javajdbcgui.dao.GclassDao;
 import ma.ydev0.javajdbcgui.entities.Gclass;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +17,7 @@ public class GclassDaoImp implements GclassDao {
     PreparedStatement ps = null;
 
     try {
-      ps = conn.prepareStatement("INSERT INTO gclass (label, description) VALUES (?, ?)");
+      ps = conn.prepareStatement("INSERT INTO gclass (label, description) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
       ps.setString(1, gclass.getLabel());
       ps.setString(2, gclass.getDescription());
       int rowsAffected = ps.executeUpdate();

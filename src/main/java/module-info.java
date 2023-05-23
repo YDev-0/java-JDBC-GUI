@@ -7,5 +7,6 @@ module ma.ydev0.dbguiproject.javajdbcgui {
 
 
     opens ma.ydev0.javajdbcgui to javafx.fxml;
+    opens ma.ydev0.javajdbcgui.entities to javafx.base;
     exports ma.ydev0.javajdbcgui;
 }

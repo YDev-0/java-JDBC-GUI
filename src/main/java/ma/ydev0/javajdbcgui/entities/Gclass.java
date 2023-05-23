@@ -1,7 +1,7 @@
 package ma.ydev0.javajdbcgui.entities;
 
 public class Gclass {
-  private int id;
+  private Integer id;
   private String label;
   private String description;
 

@@ -1,10 +1,10 @@
 package ma.ydev0.javajdbcgui.entities;
 
 public class Gcharacter  {
-  private int id;
+  private Integer id;
   private String name;
-  private int health;
-  private float damage;
+  private Integer health;
+  private Float damage;
   private Gclass gClass;
 
   public Gcharacter() {
@@ -51,11 +51,11 @@ public class Gcharacter  {
     this.damage = damage;
   }
 
-  public Gclass getgClass() {
+  public Gclass getGClass() {
     return gClass;
   }
 
-  public void setgClass(Gclass gClass) {
+  public void setGClass(Gclass gClass) {
     this.gClass = gClass;
   }
 
