@@ -13,142 +13,181 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ma.ydev0.javajdbcgui.WindowController">
    <children>
       <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <tabs>
-          <Tab text="Characters">
+         <tabs>
+            <Tab text="Characters">
                <content>
-                <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="531.0" prefWidth="893.0">
+                  <VBox alignment="CENTER">
                      <children>
-                        <ScrollPane prefHeight="533.0" prefWidth="894.0">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="532.0" prefWidth="892.0">
-                                 <children>
-                                    <ScrollPane layoutX="14.0" layoutY="13.0" prefHeight="421.0" prefWidth="493.0">
-                                       <content>
-                                          <TableView fx:id="tvGcharacters" onMouseClicked="#updateSelectedGcharacter" prefHeight="420.0" prefWidth="492.0">
-                                            <columns>
-                                              <TableColumn fx:id="colGcharacterId" prefWidth="75.0" text="ID" />
-                                              <TableColumn fx:id="colGcharacterName" prefWidth="75.0" text="NAME" />
-                                                <TableColumn fx:id="colGcharacterHealth" prefWidth="75.0" text="HEALTH" />
-                                                <TableColumn fx:id="colGcharacterDamage" prefWidth="75.0" text="DAMAGE" />
-                                                <TableColumn fx:id="colGcharacterClassId" prefWidth="100.0" text="CLASS ID" />
-                                            </columns>
-                                          </TableView>
-                                       </content>
-                                    </ScrollPane>
-                                    <GridPane layoutX="551.0" layoutY="71.0" prefHeight="140.0" prefWidth="273.0">
-                                      <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                      </rowConstraints>
-                                       <children>
-                                          <Label text="Id:" />
-                                          <Label prefHeight="17.0" prefWidth="51.0" text="Name:" GridPane.rowIndex="1" />
-                                          <Label text="Health:" GridPane.rowIndex="2" />
-                                          <Label text="Damage:" GridPane.rowIndex="3" />
-                                          <Label text="Class:" GridPane.rowIndex="4" />
-                                          <TextField fx:id="tfGcharacterId" disable="true" editable="false" GridPane.columnIndex="1" />
-                                          <TextField fx:id="tfname" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <TextField fx:id="tfhealth" onKeyTyped="#checkHealthInput" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                          <TextField fx:id="tfdamage" onKeyTyped="#checkDamageInput" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                          <ChoiceBox fx:id="cbgclass" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                       </children>
-                                    </GridPane>
-                                    <GridPane layoutX="576.0" layoutY="224.0" prefHeight="30.0" prefWidth="262.0">
-                                      <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                      </rowConstraints>
-                                       <children>
-                                          <Button fx:id="btnGcharacterAdd" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addCharacterAction" prefWidth="75.0" text="Add" />
-                                          <Button fx:id="btnGcharacterUpdate" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#updateCharacterAction" prefWidth="75.0" text="Update" GridPane.columnIndex="1" />
-                                          <Button fx:id="btnGcharacterClear1" mnemonicParsing="false" onAction="#clearGcharacterField" prefWidth="75.0" text="Clear" GridPane.columnIndex="2" />
-                                       </children>
-                                    </GridPane>
-                                    <Button fx:id="btnGcharacterDelete" layoutX="223.0" layoutY="453.0" mnemonicParsing="false" onAction="#deleteCharacterAction" prefWidth="75.0" text="Delete" />
-                                 </children>
-                              </AnchorPane>
-                          </content>
-                        </ScrollPane>
-                     </children>
-                  </AnchorPane>
-               </content>
-          </Tab>
-          <Tab text="Classes">
-               <content>
-                  <AnchorPane prefHeight="531.0" prefWidth="893.0">
-                     <children>
-                        <Pane prefHeight="523.0" prefWidth="883.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <HBox alignment="CENTER">
                            <children>
-                              <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="409.0" prefWidth="524.0">
+                              <ScrollPane>
                                  <content>
-                                    <TableView fx:id="tvGclasses" onMouseClicked="#updateSelectedGclass" prefHeight="407.0" prefWidth="522.0">
-                                       <columns>
-                                          <TableColumn fx:id="colGclassId" prefWidth="75.0" text="ID" />
-                                          <TableColumn fx:id="colGclassLabel" prefWidth="75.0" text="LABEL" />
-                                          <TableColumn fx:id="colGclassDescription" minWidth="200.0" prefWidth="350.0" text="DESCRIPION" />
-                                       </columns>
-                                    </TableView>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="532.0" prefWidth="892.0">
+                                       <children>
+                                          <ScrollPane layoutX="14.0" layoutY="13.0" prefHeight="421.0" prefWidth="493.0">
+                                             <content>
+                                                <TableView fx:id="tvGcharacters" onMouseClicked="#updateSelectedGcharacter" prefHeight="420.0" prefWidth="492.0">
+                                                   <columns>
+                                                      <TableColumn fx:id="colGcharacterId" prefWidth="75.0" text="ID" />
+                                                      <TableColumn fx:id="colGcharacterName" prefWidth="75.0" text="NAME" />
+                                                      <TableColumn fx:id="colGcharacterHealth" prefWidth="75.0" text="HEALTH" />
+                                                      <TableColumn fx:id="colGcharacterDamage" prefWidth="75.0" text="DAMAGE" />
+                                                      <TableColumn fx:id="colGcharacterClassId" prefWidth="100.0" text="CLASS ID" />
+                                                   </columns>
+                                                </TableView>
+                                             </content>
+                                          </ScrollPane>
+                                          <GridPane layoutX="551.0" layoutY="71.0" prefHeight="140.0" prefWidth="273.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Label prefHeight="17.0" prefWidth="51.0" text="Name:" />
+                                                <Label text="Health:" GridPane.rowIndex="1" />
+                                                <Label text="Damage:" GridPane.rowIndex="2" />
+                                                <Label text="Class:" GridPane.rowIndex="3" />
+                                                <TextField fx:id="tfname" GridPane.columnIndex="1" />
+                                                <TextField fx:id="tfhealth" onKeyTyped="#checkHealthInput" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <TextField fx:id="tfdamage" onKeyTyped="#checkDamageInput" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <ChoiceBox fx:id="cbgclass" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                             </children>
+                                          </GridPane>
+                                          <GridPane layoutX="576.0" layoutY="224.0" prefHeight="30.0" prefWidth="262.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Button fx:id="btnGcharacterAdd" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addCharacterAction" prefWidth="75.0" text="Add" />
+                                                <Button fx:id="btnGcharacterUpdate" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#updateCharacterAction" prefWidth="75.0" text="Update" GridPane.columnIndex="1" />
+                                                <Button fx:id="btnGcharacterClear1" mnemonicParsing="false" onAction="#clearGcharacterField" prefWidth="75.0" text="Clear" GridPane.columnIndex="2" />
+                                             </children>
+                                          </GridPane>
+                                          <GridPane layoutX="61.0" layoutY="444.0">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Button fx:id="btnGcharacterExport" mnemonicParsing="false" onAction="#exportSelectedGcharacters" prefWidth="75.0" text="Export" GridPane.columnIndex="1" />
+                                                <Button fx:id="btnGcharacterDelete" mnemonicParsing="false" onAction="#deleteCharacterAction" prefWidth="75.0" text="Delete" />
+                                                <Button fx:id="btnGcharacterImport" mnemonicParsing="false" onAction="#importGcharactersFromExcel" prefWidth="75.0" text="Import" GridPane.columnIndex="2" />
+                                                <Button fx:id="btnGcharacterSave" disable="true" mnemonicParsing="false" onAction="#saveGcharacters" prefWidth="75.0" text="Save" GridPane.columnIndex="3" />
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </AnchorPane>
                                  </content>
                               </ScrollPane>
-                              <GridPane layoutX="570.0" layoutY="61.0" prefHeight="103.0" prefWidth="273.0">
-                                 <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                 </columnConstraints>
-                                 <rowConstraints>
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                 </rowConstraints>
-                                 <children>
-                                    <TextField fx:id="tfGclassId" disable="true" GridPane.columnIndex="1" />
-                                    <Label text="Id:" />
-                                    <TextField fx:id="tflabel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <Label prefHeight="17.0" prefWidth="51.0" text="Label:" GridPane.rowIndex="1" />
-                                    <Label text="Description:" GridPane.rowIndex="2" />
-                                    <TextArea fx:id="tadescription" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                 </children>
-                              </GridPane>
-                              <GridPane layoutX="583.0" layoutY="189.0" prefHeight="30.0" prefWidth="247.0">
-                                 <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                 </columnConstraints>
-                                 <rowConstraints>
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                 </rowConstraints>
-                                 <children>
-                                    <Button fx:id="btnGclassAdd" mnemonicParsing="false" onAction="#addGclassAction" prefWidth="75.0" text="Add" />
-                                    <Button fx:id="btnGclassUpdate" mnemonicParsing="false" onAction="#updateGclassAction" prefWidth="75.0" text="Update" GridPane.columnIndex="1" />
-                                    <Button fx:id="btnGclassClear" mnemonicParsing="false" onAction="#clearGclassField" prefWidth="75.0" text="Clear" GridPane.columnIndex="2" />
-                                 </children>
-                              </GridPane>
-                              <Button fx:id="btnGclassDelete" layoutX="239.0" layoutY="448.0" mnemonicParsing="false" onAction="#deleteGclassAction" prefWidth="75.0" text="Delete" />
                            </children>
-                        </Pane>
+                        </HBox>
                      </children>
-                  </AnchorPane>
+                  </VBox>
                </content>
             </Tab>
-        </tabs>
+            <Tab text="Classes">
+               <content>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <ScrollPane>
+                                 <content>
+                                    <AnchorPane prefHeight="531.0" prefWidth="893.0">
+                                       <children>
+                                          <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="409.0" prefWidth="524.0">
+                                             <content>
+                                                <TableView fx:id="tvGclasses" onMouseClicked="#updateSelectedGclass" prefHeight="407.0" prefWidth="522.0">
+                                                   <columns>
+                                                      <TableColumn fx:id="colGclassId" prefWidth="75.0" text="ID" />
+                                                      <TableColumn fx:id="colGclassLabel" prefWidth="75.0" text="LABEL" />
+                                                      <TableColumn fx:id="colGclassDescription" minWidth="200.0" prefWidth="350.0" text="DESCRIPION" />
+                                                   </columns>
+                                                </TableView>
+                                             </content>
+                                          </ScrollPane>
+                                          <GridPane layoutX="557.0" layoutY="56.0" prefHeight="103.0" prefWidth="273.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <TextField fx:id="tflabel" GridPane.columnIndex="1" />
+                                                <Label prefHeight="17.0" prefWidth="51.0" text="Label:" />
+                                                <Label text="Description:" GridPane.rowIndex="1" />
+                                                <TextArea fx:id="tadescription" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                             </children>
+                                          </GridPane>
+                                          <GridPane layoutX="570.0" layoutY="217.0" prefHeight="30.0" prefWidth="247.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Button fx:id="btnGclassAdd" mnemonicParsing="false" onAction="#addGclassAction" prefWidth="75.0" text="Add" />
+                                                <Button fx:id="btnGclassUpdate" mnemonicParsing="false" onAction="#updateGclassAction" prefWidth="75.0" text="Update" GridPane.columnIndex="1" />
+                                                <Button fx:id="btnGclassClear" mnemonicParsing="false" onAction="#clearGclassField" prefWidth="75.0" text="Clear" GridPane.columnIndex="2" />
+                                             </children>
+                                          </GridPane>
+                                          <GridPane alignment="CENTER" layoutX="76.0" layoutY="441.0">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Button fx:id="btnGclassDelete" mnemonicParsing="false" onAction="#deleteGclassAction" prefWidth="75.0" text="Delete" />
+                                                <Button fx:id="btnGclassExport" mnemonicParsing="false" onAction="#exportSelectedGclasses" prefWidth="75.0" text="Export" GridPane.columnIndex="1" />
+                                                <Button fx:id="btnGclassImport" mnemonicParsing="false" onAction="#importGclassesFromExcel" prefWidth="75.0" text="Import" GridPane.columnIndex="2" />
+                                                <Button fx:id="btnGclassSave" disable="true" mnemonicParsing="false" onAction="#saveGclasses" prefWidth="75.0" text="Save" GridPane.columnIndex="3" />
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </content>
+            </Tab>
+         </tabs>
       </TabPane>
    </children>
 </AnchorPane>

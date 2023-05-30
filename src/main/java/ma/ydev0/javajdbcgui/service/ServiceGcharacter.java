@@ -6,6 +6,7 @@ import ma.ydev0.javajdbcgui.entities.Gcharacter;
 import ma.ydev0.javajdbcgui.fio.GcharacterFio;
 import ma.ydev0.javajdbcgui.fio.imp.GcharacterFioImp;
 
+import java.io.File;
 import java.util.List;
 
 public class ServiceGcharacter {
@@ -26,7 +27,11 @@ public class ServiceGcharacter {
     gcharacterDao.deleteById(gcharacter.getId());
   }
 
-  public void exportAsExcel(List<Gcharacter> gcharacters, String fileName) {
-    gcharacterFio.exportAsExcel(gcharacters, fileName);
+  public boolean exportAsExcel(List<Gcharacter> gcharacters, String fileName, boolean replace) {
+    return gcharacterFio.exportAsExcel(gcharacters, fileName, replace);
+  }
+
+  public List<Gcharacter> importFromExcel(File file) {
+    return gcharacterFio.importFromExcel(file);
   }
 }

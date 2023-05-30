@@ -30,7 +30,7 @@ public class ServiceGclass {
     return gclassDao.findById(id);
   }
 
-  public void exportAsExcel(List<Gclass> gclasses, String fileName) {
-    gclassFio.exportAsExcel(gclasses, fileName);
+  public boolean exportAsExcel(List<Gclass> gclasses, String fileName, boolean replace) {
+    return gclassFio.exportAsExcel(gclasses, fileName, replace);
   }
 }

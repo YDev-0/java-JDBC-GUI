@@ -1,23 +1,22 @@
 package ma.ydev0.javajdbcgui.fio.imp;
 
+import ma.ydev0.javajdbcgui.entities.Gcharacter;
 import ma.ydev0.javajdbcgui.entities.Gclass;
 import ma.ydev0.javajdbcgui.fio.GclassFio;
+import ma.ydev0.javajdbcgui.service.ServiceGclass;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.io.*;
+import java.util.*;
 
 public class GclassFioImp implements GclassFio {
+    private static XSSFRow row;
     @Override
-    public void exportAsExcel(List<Gclass> gclasses, String fileName) {
+    public boolean exportAsExcel(List<Gclass> gclasses, String fileName, boolean replace) {
         //Création d'un objet de type fichier Excel
         XSSFWorkbook workbook = new XSSFWorkbook();
 
@@ -53,6 +52,8 @@ public class GclassFioImp implements GclassFio {
             }
         }
 
+        if(checkIfExist(fileName) && !replace) return false;
+
         //Excrire les données dans un FileOutputStream
         FileOutputStream out = null;
         try {
@@ -60,6 +61,7 @@ public class GclassFioImp implements GclassFio {
             workbook.write(out);
             out.close();
             System.out.println("Work done.");
+            return true;
         } catch (
                 FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -69,8 +71,44 @@ public class GclassFioImp implements GclassFio {
         }
     }
 
-    @Override
-    public void importAsExcel(String path) {
+    private boolean checkIfExist(String fileName) {
+        File f = new File("src/main/resources/" + fileName + ".xlsx");
+        return f.isFile();
+    }
 
+
+    @Override
+    public List<Gclass> importFromExcel(File file)  {
+        try(FileInputStream fis = new FileInputStream(file)) {
+            XSSFWorkbook workbook = new XSSFWorkbook(fis);
+            XSSFSheet spreadsheet = workbook.getSheetAt(0);
+            Iterator<Row> rowIterator = spreadsheet.iterator();
+
+            List<Gclass> gclassesList = new ArrayList<>();
+
+            while (rowIterator.hasNext()) {
+                row = (XSSFRow) rowIterator.next();
+                if(row.getPhysicalNumberOfCells() == 2) new IOException("Error while getting data from row");
+
+                gclassesList.add(instantiateGclass(row));
+            }
+
+            return gclassesList;
+        }
+        catch (FileNotFoundException e) {
+            System.err.println(e.getMessage());
+        }
+        catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
+
+    private Gclass instantiateGclass(Row row) {
+        int id = Integer.parseInt(row.getCell(0).toString());
+        String label = row.getCell(1).toString();
+        String description = row.getCell(2).toString();
+
+        return new Gclass(id,label, description);
     }
 }

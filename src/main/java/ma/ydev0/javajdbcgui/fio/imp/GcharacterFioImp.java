@@ -1,23 +1,23 @@
 package ma.ydev0.javajdbcgui.fio.imp;
 
+import ma.ydev0.javajdbcgui.dao.GclassDao;
 import ma.ydev0.javajdbcgui.entities.Gcharacter;
+import ma.ydev0.javajdbcgui.entities.Gclass;
 import ma.ydev0.javajdbcgui.fio.GcharacterFio;
+import ma.ydev0.javajdbcgui.service.ServiceGclass;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.io.*;
+import java.util.*;
 
 public class GcharacterFioImp implements GcharacterFio {
+    private static XSSFRow row;
     @Override
-    public void exportAsExcel(List<Gcharacter> gcharacters, String fileName) {
+    public boolean exportAsExcel(List<Gcharacter> gcharacters, String fileName, boolean replace) {
         // Création d'un objet de type fichier Excel
         XSSFWorkbook workbook = new XSSFWorkbook();
 
@@ -37,7 +37,7 @@ public class GcharacterFioImp implements GcharacterFio {
             });
         }
 
-        //parcourir les données pour les écrire dans le fichier Excel
+        // Parcourir les données pour les écrire dans le fichier Excel
         Set<String> keyid = characterInfo.keySet();
         int rowid = 0;
 
@@ -55,13 +55,16 @@ public class GcharacterFioImp implements GcharacterFio {
             }
         }
 
+        if(checkIfExist(fileName) && !replace) return false;
+
         //Excrire les données dans un FileOutputStream
-        FileOutputStream out = null;
+        FileOutputStream out;
         try {
             out = new FileOutputStream("src/main/resources/" + fileName + ".xlsx");
             workbook.write(out);
             out.close();
             System.out.println("Work done.");
+            return true;
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -69,8 +72,55 @@ public class GcharacterFioImp implements GcharacterFio {
         }
     }
 
-    @Override
-    public void importAsExcel(String path) {
+    private boolean checkIfExist(String fileName) {
+        File f = new File("src/main/resources/" + fileName + ".xlsx");
+        return f.isFile();
+    }
 
+    @Override
+    public List<Gcharacter> importFromExcel(File file) {
+        try(FileInputStream fis = new FileInputStream(file)) {
+            XSSFWorkbook workbook = new XSSFWorkbook(fis);
+            XSSFSheet spreadsheet = workbook.getSheetAt(0);
+            Iterator<Row> rowIterator = spreadsheet.iterator();
+
+            List<Gcharacter> gcharactersList = new ArrayList<>();
+            Map<Integer, Gclass> gclassesMap = new HashMap<>();
+            ServiceGclass serviceGclass = new ServiceGclass();
+            rowIterator.next();
+            while (rowIterator.hasNext()) {
+                row = (XSSFRow) rowIterator.next();
+                if(row.getPhysicalNumberOfCells() == 5) new IOException("Error while getting data from row");
+
+                System.out.println("Gclass id from row is : " + row.getCell(4).toString());
+                int class_id = Integer.parseInt(row.getCell(4).toString());
+                Gclass gclass = gclassesMap.get(class_id);
+
+                if(gclass == null) {
+                    gclass = serviceGclass.findById(class_id);
+                    gclassesMap.put(class_id, gclass);
+                }
+
+                gcharactersList.add(instantiateGcharacter(row, gclass));
+            }
+
+            return gcharactersList;
+        }
+        catch (FileNotFoundException e) {
+            System.err.println(e.getMessage());
+        }
+        catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
+
+    private Gcharacter instantiateGcharacter(Row row, Gclass gclass) {
+        int id = Integer.parseInt(row.getCell(0).toString());
+        String name = row.getCell(1).toString();
+        int health = Integer.parseInt(row.getCell(2).toString());
+        float damage = Float.parseFloat(row.getCell(3).toString());
+
+        return new Gcharacter(id, name, health, damage, gclass);
     }
 }
