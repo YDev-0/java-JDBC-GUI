@@ -413,7 +413,7 @@ public class WindowController implements Initializable {
             showErrorDialog("Please fill all blank fields.");
             return null;
         }
-        Integer id = m_gcharacterId.isEmpty() ? null : Integer.parseInt(m_gcharacterId);
+        Integer id = m_gcharacterId == null || m_gcharacterId.isEmpty() ? null : Integer.parseInt(m_gcharacterId);
         String name = tfname.getText();
         int health = Integer.parseInt(tfhealth.getText());
         float damage = Float.parseFloat(tfdamage.getText());
